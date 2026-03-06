@@ -3,23 +3,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Cat } from '@/types/cat';
+import { getCats, getCatsByBreed } from '@/services/catService';
 import CatDetail from '@/components/CatDetail';
 import CatGrid from '@/components/catgrid';
 import SearchBar from '@/components/SearchBar';
 import BreedList from '@/components/breedList';
 import LoadingSkeleton from '@/components/loadingSkeleton';
 import ErrorMessage from '@/components/ErrorMessage';
-
-const CAT_API = process.env.NEXT_PUBLIC_CAT_API_URL!;
-
-async function fetchCatsFromAPI(breedId?: string): Promise<Cat[]> {
-  const url = breedId
-    ? `${CAT_API}/images/search?limit=20&has_breeds=1&breed_ids=${breedId}`
-    : `${CAT_API}/images/search?limit=20&has_breeds=1`;
-  const res = await fetch(url);
-  if (!res.ok) throw new Error('Error al obtener gatos');
-  return res.json();
-}
 
 export default function CatsPage() {
   const [cats, setCats]               = useState<Cat[]>([]);
@@ -33,7 +23,7 @@ export default function CatsPage() {
     setLoading(true);
     setError(null);
     try {
-      const data = breedId ? await fetchCatsFromAPI(breedId) : await fetchCatsFromAPI();
+      const data = breedId ? await getCatsByBreed(breedId) : await getCats(20);
       setCats(data);
       setSelected(data[0] ?? null);
     } catch {

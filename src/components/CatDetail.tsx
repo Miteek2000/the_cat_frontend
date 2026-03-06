@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { Cat, Breed } from '@/types/cat';
+import { getCatById } from '@/services/catService';
 
 interface Props {
   cat: Cat | null;
@@ -36,8 +37,7 @@ export default function CatDetail({ cat }: Props) {
     }
 
     setLoadingBreed(true);
-    fetch(`${process.env.NEXT_PUBLIC_CAT_API_URL}/images/${cat.id}`)
-      .then((r) => r.json())
+    getCatById(cat.id)
       .then((data) => setBreed(data.breeds?.[0] ?? null))
       .catch(() => setBreed(null))
       .finally(() => setLoadingBreed(false));
