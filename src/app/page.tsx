@@ -42,7 +42,7 @@ export default function Home() {
               GatoPedia
             </h1>
             <button
-              className="mt-1 rounded-full px-23 py-1 text-lg font-Semibold text-white transition-opacity hover:opacity-80 shadow-md"
+              className="mt-1 rounded-full px-23 py-1 text-lg font-semibold text-white transition-opacity hover:opacity-80 shadow-md"
               style={{ backgroundColor: "#BFA080" }}
             >
               Iniciar
